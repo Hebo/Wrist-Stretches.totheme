@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Text</title>
+
+<style type="text/css">
+body
+{
+	background-color: rgba(0, 0, 0, 0);
+}
+
+#text {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: auto;
+	margin-bottom: auto;
+	width: 100%;
+	height: 98vh;
+    position: fixed;
+    overflow-y: scroll;
+	white-space: pre-wrap;
+	color: #252525;
+	font-family: Helvetica, sans-serif;
+	font-size: 200%;
+	font-weight: bold;
+	line-height: 1.5em;
+	text-align: center;
+/* 	background-color: red; */
+}
+
+</style>
+
+<script type="text/javascript">
+
+var breakIdentifier = 'TimeOutText';
+
+function getText()
+{
+	// This shows how to get a unique identifier for the break, so each break can have different text:
+	window.webkit.messageHandlers.getTimeOutInfo.postMessage('summary');
+}
+
+// The callback from the above getTimeOutInfo request; returns a JSON string with keys including "format" (e.g. 1), "level" (e.g. "summary"), "appVersion" (e.g. "2.0"), "appRelease" (e.g. "2010"), "breakName" (e.g. "Normal"), "breakIdentifier" (e.g. a UUID for the break), and possibly others:
+function timeOutInfo(json)
+{
+	var obj = JSON.parse(json);
+
+	// Using a prefix to avoid stomping on other local storage (e.g. other themes):
+	breakIdentifier = 'TimeOutText-' + obj.breakIdentifier;
+
+	if (localStorage[breakIdentifier])
+	{
+		var text = localStorage[breakIdentifier];
+	}
+	else
+	{
+		var text = '\n\n\n\n\n\nEdit this to say whatever you like!\n\nJust double-click this text and type.';
+	}
+
+	document.getElementById('text').innerHTML = text;
+}
+
+function saveText(id)
+{
+	var text = document.getElementById('text').innerHTML;
+	localStorage[breakIdentifier] = text;
+}
+
+function clearText()
+{
+	localStorage.clear();
+}
+
+</script>
+
+</head>
+
+<body>
+
+<div id="text">
+	1. Fist -> Tabletop -> Claw -> Half fist
+	2. Stretch each finger and thumb
+	3. Blocking exercises
+	4. Stretch arm; wrist down, wrist up, around the world and back
+	5. Shake out hands and fingers
+	6. Straight arm, pull fingers back, pull hand back, pull hand down
+	7. Massage hand and joints with thumb
+</div>
+
+<script>
+// 	clearText();
+//	getText();
+</script>
+
+</body>
+</html>
+
