@@ -1,97 +1,72 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Text</title>
+	<title>Text</title>
 
-<style type="text/css">
-body
-{
-	background-color: rgba(0, 0, 0, 0);
-}
+	<style type="text/css">
+		body {
+			background-color: rgba(0, 0, 0, 0);
+		}
 
-#text {
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: auto;
-	margin-bottom: auto;
-	width: 100%;
-	height: 98vh;
-    position: fixed;
-    overflow-y: scroll;
-	white-space: pre-wrap;
-	color: #252525;
-	font-family: Helvetica, sans-serif;
-	font-size: 200%;
-	font-weight: bold;
-	line-height: 1.5em;
-	text-align: center;
-/* 	background-color: red; */
-}
+		.content {
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: auto;
+			margin-bottom: auto;
+			width: 100%;
+			height: 98vh;
+			position: fixed;
+			overflow-y: scroll;
+			white-space: pre-wrap;
+			color: #252525;
+			font-family: Helvetica, sans-serif;
+			font-size: 200%;
+			font-weight: bold;
+			line-height: 1.5em;
+			text-align: center;
+			/* 	background-color: red; */
+		}
 
-</style>
+		#exercise-img {
+			/* margin-top: 10px; */
+			height: 320px
+		}
+	</style>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 
-var breakIdentifier = 'TimeOutText';
+		const exercises = [
+			{ text: "Fist -> Tabletop -> Claw -> Half fist", img: "thumb-1.jpg" },
+			{ text: "Stretch each finger and thumb", img: "thumb-2.jpg" },
+			{ text: "Blocking exercises & Piano", img: "thumb-3.jpg" },
+			{ text: "Stretch arm; wrist down, wrist up, around the world and back", img: "thumb-4.jpg" },
+			{ text: "Shake out hands and fingers", img: "thumb-5.jpg" },
+			{ text: "Straight arm, pull fingers back, pull hand back, pull hand down", img: "thumb-6.jpg" },
+			{ text: "Massage hand and joints with thumb", img: "thumb-7.jpg" },
+		]
 
-function getText()
-{
-	// This shows how to get a unique identifier for the break, so each break can have different text:
-	window.webkit.messageHandlers.getTimeOutInfo.postMessage('summary');
-}
+		document.addEventListener('DOMContentLoaded', function () {
+			div = document.getElementById("exercise-text");
+			img = document.getElementById("exercise-img");
 
-// The callback from the above getTimeOutInfo request; returns a JSON string with keys including "format" (e.g. 1), "level" (e.g. "summary"), "appVersion" (e.g. "2.0"), "appRelease" (e.g. "2010"), "breakName" (e.g. "Normal"), "breakIdentifier" (e.g. a UUID for the break), and possibly others:
-function timeOutInfo(json)
-{
-	var obj = JSON.parse(json);
+			rand = Math.floor(Math.random() * (exercises.length));
 
-	// Using a prefix to avoid stomping on other local storage (e.g. other themes):
-	breakIdentifier = 'TimeOutText-' + obj.breakIdentifier;
+			div.innerText = exercises[rand].text
+			img.src = "images/" + exercises[rand].img
 
-	if (localStorage[breakIdentifier])
-	{
-		var text = localStorage[breakIdentifier];
-	}
-	else
-	{
-		var text = '\n\n\n\n\n\nEdit this to say whatever you like!\n\nJust double-click this text and type.';
-	}
-
-	document.getElementById('text').innerHTML = text;
-}
-
-function saveText(id)
-{
-	var text = document.getElementById('text').innerHTML;
-	localStorage[breakIdentifier] = text;
-}
-
-function clearText()
-{
-	localStorage.clear();
-}
-
-</script>
-
+		}, false);
+	</script>
 </head>
 
 <body>
 
-<div id="text">
-	1. Fist -> Tabletop -> Claw -> Half fist
-	2. Stretch each finger and thumb
-	3. Blocking exercises
-	4. Stretch arm; wrist down, wrist up, around the world and back
-	5. Shake out hands and fingers
-	6. Straight arm, pull fingers back, pull hand back, pull hand down
-	7. Massage hand and joints with thumb
-</div>
+	<div class="content">
+		<div id="exercise-text"></div>
+		<img id="exercise-img" src="" />
+	</div>
 
-<script>
-// 	clearText();
-//	getText();
-</script>
 
 </body>
-</html>
 
+</html>
